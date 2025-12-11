@@ -1,4 +1,5 @@
-load "src/ringml.ring"
+load "../src/ringml.ring"
+decimals(8)
 
 see "=== RingML Backpropagation Test ===" + nl
 

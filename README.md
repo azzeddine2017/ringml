@@ -1,46 +1,36 @@
+# 🧠 RingML: Deep Learning Library for Ring
 
-# RingML: Deep Learning Library for Ring Language
+**RingML** is a lightweight, modular, and extensible Deep Learning framework written in [Ring](https://ring-lang.net). It provides a PyTorch-like API for building, training, and deploying Neural Networks, powered by the **FastPro** C-extension for high-performance matrix operations.
 
-RingML is a lightweight, modular Deep Learning framework built from scratch in Ring. It leverages the **FastPro** extension for accelerated matrix operations, providing a PyTorch-like API for building and training Neural Networks.
+---
 
 ## 🚀 Features
 
-*   **Tensor Engine**: Wraps `FastPro` C-extension for matrix math (MatMul, Transpose, etc.).
-*   **Automatic Differentiation**: Implements full Backpropagation (Backward Pass).
-*   **Layers**:
-    *   `Dense` (Fully Connected).
-    *   `Sigmoid`, `ReLU`, `Tanh` (Activations).
-*   **Optimization**:
-    *   `SGD` (Stochastic Gradient Descent).
-    *   `MSELoss` (Mean Squared Error).
-*   **API**:
-    *   `Sequential` model container for easy stacking of layers.
+*   **Tensor Engine**: fast matrix operations (MatMul, Transpose, Broadcasting).
+*   **Layer-Based Architecture**: Modular `Sequential` models with `Dense`, `ReLU`, `Sigmoid`, `Softmax`.
+*   **Automatic Differentiation**: Full implementation of Backpropagation.
+*   **Optimizers & Loss**: `SGD` optimizer, `MSELoss` for regression, `CrossEntropyLoss` for classification.
+*   **Data Handling**: `Dataset` and `DataLoader` for mini-batch processing.
+*   **Model Persistence**: Save and Load trained models easily.
 
-## 📦 Project Structure
+---
 
-```text
-src/
-├── core/
-│   └── tensor.ring       # The mathematical heart (Matrix ops)
-├── layers/
-│   ├── layer.ring        # Abstract Base Class
-│   ├── dense.ring        # Fully Connected Layer
-│   └── activation.ring   # Activation Functions
-├── loss/
-│   └── mse.ring          # Mean Squared Error
-├── model/
-│   └── sequential.ring   # Model Container
-├── optim/
-│   └── sgd.ring          # Optimizer
-└── ringml.ring           # Main Loader
-examples/
-└── xor_train.ring        # Proof-of-concept (XOR Problem)
-```
+## 📦 Installation
+
+1.  Ensure you have **Ring 1.20+**.
+2.  Ensure the **FastPro** extension is available (dll/so).
+3.  Clone this repository:
+    ```bash
+    git clone https://github.com/yourusername/RingML.git
+    ```
+
+---
+
 ## ⚡ Quick Start
 
-### Solving XOR Problem
+### 1. Classification (XOR Problem)
 
-```Ring
+```ring
 load "src/ringml.ring"
 
 # 1. Prepare Data
@@ -55,31 +45,96 @@ model.add(new Dense(4, 1)) # Output: 1
 model.add(new Sigmoid)
 
 # 3. Setup Training
-optimizer = new SGD(0.5)   # Learning Rate
+optimizer = new SGD(0.5)
 criterion = new MSELoss
 
-# 4. Training Loop
+# 4. Train
 for epoch = 1 to 5000
-    # Forward
     preds = model.forward(inputs)
+    loss  = criterion.forward(preds, targets)
     
-    # Backward
-    lossGrad = criterion.backward(preds, targets)
-    model.backward(lossGrad)
+    # Backpropagation
+    grad = criterion.backward(preds, targets)
+    model.backward(grad)
     
-    # Update
-    for layer in model.getLayers()
-        optimizer.update(layer)
-    next
+    # Update Weights
+    for layer in model.getLayers() optimizer.update(layer) next
 next
-```
-# 5. Predict
+
 model.forward(inputs).print()
+```
 
-**🛠 Dependencies**
-*  Ring Language (1.24 or later)
-*  FastPro Extension (Must be loaded/dll available)
+### 2. Multi-Class Classification (Softmax)
 
-## 📝 License
-Open Source. 
+```ring
+load "src/ringml.ring"
 
+# Model for 3 classes
+model = new Sequential
+model.add(new Dense(10, 20)) 
+model.add(new Sigmoid)
+model.add(new Dense(20, 3)) 
+model.add(new Softmax)       # Output Probabilities
+
+criterion = new CrossEntropyLoss
+
+# 4. Train
+for epoch = 1 to 5000
+    preds = model.forward(inputs)
+    loss  = criterion.forward(preds, targets)
+    
+    # Backpropagation
+    grad = criterion.backward(preds, targets)
+    model.backward(grad)
+    
+    # Update Weights
+    for layer in model.getLayers() optimizer.update(layer) next
+next
+
+model.forward(inputs).print()
+```
+
+### 3. Save & Load Models
+
+```ring
+load "src/ringml.ring"
+
+# Save
+model.saveWeights("mymodel.rdata")
+
+# Load
+model2 = new Sequential
+# ... (Define same architecture) ...
+model2.loadWeights("mymodel.rdata")
+```
+
+---
+
+## 📂 Project Structure
+
+```text
+RingML/
+├── src/
+│   ├── core/           # Tensor & Math Logic
+│   ├── data/           # Dataset & DataLoader
+│   ├── layers/         # Dense, Activations, Softmax
+│   ├── loss/           # MSE, CrossEntropy
+│   ├── model/          # Sequential Container
+│   ├── optim/          # Optimizers (SGD)
+│   └── ringml.ring     # Library Loader
+├── examples/           # Ready-to-run demos
+└── README.md           # Documentation
+```
+
+---
+
+## 🛠 Status & Performance
+
+Current Version: 1.0
+Performance: Uses Ring loops for some operations (Safe Mode) pending specific updates to FastPro C-Extension (Double precision support).
+
+---
+
+## 📄 License
+
+Open Source under MIT License.

@@ -2,7 +2,7 @@
 # Description: Activation Layers (ReLU, Sigmoid) with Backprop
 # Author: Code Gear-1
 
-//load "layer.ring"
+
 
 class Activation from Layer
     oOutput # Cache output

@@ -1,4 +1,4 @@
-load "src/ringml.ring"
+load "../src/ringml.ring"
 
 see "=== RingML Core Tensor Tests ===" + nl
 

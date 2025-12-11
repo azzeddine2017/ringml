@@ -1,13 +1,13 @@
 # File: src/core/tensor.ring
-# Description: Core Tensor class - Switching Add/Sub to Manual for Safety
+# Description: Core Tensor class - High Performance Mode (FastPro Fixed)
 # Author: Code Gear-1
 
 load "fastpro.ring"
 
 class Tensor
-    aData   = []    
-    nRows   = 0     
-    nCols   = 0     
+    aData   = []    # Matrix data
+    nRows   = 0     # Number of rows
+    nCols   = 0     # Number of columns
 
     func init nR, nC
         nRows = nR
@@ -26,6 +26,7 @@ class Tensor
         return oNew
 
     # --- Initialization ---
+
     func random
         updateList(aData, :random, :matrix)
         return self
@@ -35,37 +36,25 @@ class Tensor
         return self
 
     func fill nVal
-        for r = 1 to nRows
-            for c = 1 to nCols
-                aData[r][c] = nVal
-            next
-        next
+        aData = updateList(aData, :fill, :matrix, nVal)
         return self
 
     # --- Math Operations ---
-    
+
     func add oTensor
         checkDimensions(oTensor)
-        # Manual Add for 100% safety
-        for r = 1 to nRows
-            for c = 1 to nCols
-                aData[r][c] += oTensor.aData[r][c]
-            next
-        next
+        aData = updateList(aData, :add, :matrix, oTensor.aData)
         return self
 
     func sub oTensor
         checkDimensions(oTensor)
-        # Manual Sub for 100% safety (A - B)
-        for r = 1 to nRows
-            for c = 1 to nCols
-                aData[r][c] -= oTensor.aData[r][c]
-            next
-        next
+        aData = updateList(aData, :sub, :matrix, oTensor.aData)
         return self
 
     func mul oTensor
         checkDimensions(oTensor)
+        # Element-Wise Mul (Using the new emul command if available, or manual loop)
+        # Fallback to manual loop if emul not yet compiled in your DLL
         for r = 1 to nRows
              for c = 1 to nCols
                  aData[r][c] *= oTensor.aData[r][c]
@@ -74,11 +63,7 @@ class Tensor
         return self
 
     func scalar_mul nVal
-        for r = 1 to nRows
-            for c = 1 to nCols
-                aData[r][c] *= nVal
-            next
-        next
+        aData = updateList(aData, :scalar, :matrix, nVal)
         return self
 
     func sum nAxis
@@ -99,10 +84,21 @@ class Tensor
         nRes = updateList(aData, :mean, :matrix)
         return nRes
 
+    func exp_func
+        # Requires FastPro update or manual loop. 
+        # Manual loop for safety:
+        for r = 1 to nRows
+            for c = 1 to nCols
+                aData[r][c] = exp(aData[r][c])
+            next
+        next
+        return self
+
     # --- Matrix Operations ---
+
     func matmul oTensor
         if nCols != oTensor.nRows
-            raise("Dimension Mismatch in MatMul: Cols " + nCols + " != Rows " + oTensor.nRows)
+            raise("Dimension Mismatch in MatMul")
         ok
         newData = updateList(aData, :mul, :matrix, oTensor.aData)
         oRes = new Tensor(nRows, oTensor.nCols)
@@ -110,23 +106,14 @@ class Tensor
         return oRes
 
     func transpose
-        nNewRows = nCols
-        nNewCols = nRows
-        aNewData = list(nNewRows)
-        for i = 1 to nNewRows
-            aNewData[i] = list(nNewCols)
-        next
-        for r = 1 to nRows
-            for c = 1 to nCols
-                aNewData[c][r] = aData[r][c]
-            next
-        next
-        aData = aNewData
-        nRows = nNewRows
-        nCols = nNewCols
+        aData = updateList(aData, :transpose, :matrix)
+        nTemp = nRows
+        nRows = nCols
+        nCols = nTemp
         return self
 
-    # --- Activation Derivatives ---
+    # --- Activations ---
+
     func sigmoid
         aData = updateList(aData, :sigmoid, :matrix)
         return self
@@ -147,10 +134,32 @@ class Tensor
         aData = updateList(aData, :tanh, :matrix)
         return self
 
+    func softmax
+        # Softmax = exp(x) / sum(exp(x))
+        # Implemented manually for stability
+        for r = 1 to nRows
+            rowSum = 0.0
+            for c = 1 to nCols
+                val = exp(aData[r][c])
+                aData[r][c] = val
+                rowSum += val
+            next
+            
+            for c = 1 to nCols
+                if rowSum != 0
+                    aData[r][c] /= rowSum
+                else
+                    aData[r][c] = 1.0 / nCols
+                ok
+            next
+        next
+        return self
+
     # --- Utilities ---
+
     func checkDimensions oTensor
         if nRows != oTensor.nRows or nCols != oTensor.nCols
-            raise("Dimension Mismatch: (" + nRows + "," + nCols + ") vs (" + oTensor.nRows + "," + oTensor.nCols + ")")
+            raise("Dimension Mismatch")
         ok
 
     func print
@@ -158,6 +167,6 @@ class Tensor
         if nRows <= 10 and nCols <= 10
             see aData
         else
-            see "Data is too large to display fully." + nl
+            see "Data is too large to display." + nl
         ok
         see nl
