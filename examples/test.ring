@@ -1,1 +1,0 @@
-load "fastpro.ring"

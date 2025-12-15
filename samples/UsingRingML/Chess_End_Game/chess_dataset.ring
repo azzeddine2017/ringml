@@ -1,6 +1,6 @@
 # File: examples/chess_dataset.ring
 # Description: Custom Dataset for Chess Data (Lazy Loading)
-
+# Author: Azzeddine Remmal
 
 
 class ChessDataset from Dataset

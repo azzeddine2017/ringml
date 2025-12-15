@@ -1,7 +1,8 @@
 # File: examples/chess_app.ring
 # Description: Console App to predict Chess End-Game result
+# Author: Azzeddine Remmal
 
-load "../../src/ringml.ring"
+load "ringml.ring"
 load "chess_utils.ring"
 
 

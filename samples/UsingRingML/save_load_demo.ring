@@ -1,4 +1,9 @@
-load "../src/ringml.ring"
+# File: examples/save_load_demo.ring
+# Description: Save/Load Model Demo
+# Author: Azzeddine Remmal
+
+load "ringml.ring"
+
 decimals(4)
 
 see "=== RingML Save/Load Model Demo ===" + nl

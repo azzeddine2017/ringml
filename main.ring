@@ -1,6 +1,5 @@
 # The Main File
-
-load "lib.ring"
+# The Main File
 
 func main
 
@@ -24,7 +23,7 @@ func main
 	? "========================================="
 	? "1. Data Preparation:"
 	? "   Use DataSplitter to handle raw CSV data and DataLoader for batching."
-	? "   see examples/loader_demo.ring"
+	? "   see samples/UsingRingML/loader_demo.ring"
 	? ""
 	? "2. Building the Model:"
 	? "   Construct a model using Tanh for hidden layers and Dropout for regularization."
@@ -37,16 +36,17 @@ func main
 	? ""
 	? "3. Training:"
 	? "   Use Adam or SGD optimizers."
-	? "   see examples/mnist/mnist_train.ring"
+	? "   see samples/UsingRingML/mnist/mnist_train.ring"
 	? ""
 	? "========================================="
 	? "              EXAMPLES                   "
 	? "========================================="
-	? "Find ready-to-run examples in the 'examples' folder:"
-	? "- examples/xor_train.ring          : Binary Classification (XOR)"
-	? "- examples/classify_demo.ring      : Multi-Class Classification"
-	? "- examples/mnist/mnist_train.ring  : MNIST Digit Recognition"
-	? "- examples/Chess_End_Game/         : Full Real-world Project"
+	? "Find ready-to-run examples in the 'samples/UsingRingML' folder:"
+	? "- samples/UsingRingML/xor_train.ring          : Binary Classification (XOR)"
+	? "- samples/UsingRingML/classify_demo.ring      : Multi-Class Classification"
+	? "- samples/UsingRingML/mnist/mnist_train.ring  : MNIST Digit Recognition"
+	? "- samples/UsingRingML/Chess_End_Game/         : Full Real-world Project"
 	? ""
 	? "Run an example:"
+	? "cd samples/UsingRingML/"
 	? "ring xor_train.ring"

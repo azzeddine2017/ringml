@@ -2,8 +2,7 @@
 # Description: Training a Neural Network to solve XOR problem
 # Author: Azzeddine Remmal
 
-# Load RingML Library (Adjust path as needed)
-load "../src/ringml.ring"
+load "ringml.ring"
 
 decimals(10)
 

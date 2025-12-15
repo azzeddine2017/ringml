@@ -1,14 +1,15 @@
 # File: examples/chess_final_model.ring
 # Description: The Ultimate Chess Training Script with All Features
-/* 
-Adam Optimizer: For speed.
-Dropout: To prevent overfitting.
-Tanh: As an activation function (instead of Sigmoid) because it converges faster in deeper layers.
-DataLoader: For data processing.
-Summary: To display the structure.
-SaveWeights: For saving.
-*/
-load "../../src/ringml.ring"
+# Author: Azzeddine Remmal
+ 
+# Adam Optimizer: For speed.
+# Dropout: To prevent overfitting.
+# Tanh: As an activation function (instead of Sigmoid) because it converges faster in deeper layers.
+# DataLoader: For data processing.
+# Summary: To display the structure.
+# SaveWeights: For saving.
+
+load "ringml.ring"
 load "chess_utils.ring"
 load "chess_dataset.ring"
 load "csvlib.ring"
@@ -100,8 +101,6 @@ for epoch = 1 to nEpochs
     next
     
     avgLoss = epochLoss / loader.nBatches
-    
-    # see "Epoch " + epoch + "/" + nEpochs + " | Loss: " + avgLoss + nl
     
     # --- FINISH EPOCH VISUALIZATION ---
     viz.finishEpoch(epoch, avgLoss, 0)

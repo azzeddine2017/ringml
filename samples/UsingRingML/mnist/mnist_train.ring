@@ -1,13 +1,15 @@
 # File: examples/mnist_train.ring
 # Description: Training MLP on MNIST Digits
+# Author: Azzeddine Remmal
 
 load "csvlib.ring"
 load "stdlib.ring"
-load "../../src/ringml.ring"
+load "ringml.ring"
 load "mnist_dataset.ring"
 
 
 decimals(5)
+
 see "=== RingML MNIST Digit Recognition ===" + nl
 
 # 1. Load Data

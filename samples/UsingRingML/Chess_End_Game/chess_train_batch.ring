@@ -1,11 +1,13 @@
 # File: examples/chess_train_batch.ring
 # Description: Efficient Batch Training for Chess KRK
+# Author: Azzeddine Remmal
 
-load "../../src/ringml.ring"
+load "ringml.ring"
 load "chess_utils.ring"
 load "chess_dataset.ring" # Load our custom dataset
 load "csvlib.ring"
 load "stdlib.ring"
+
 decimals(3)
 
 see "=== RingML Chess Training (Mini-Batch) ===" + nl

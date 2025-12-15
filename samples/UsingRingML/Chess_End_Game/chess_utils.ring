@@ -1,6 +1,6 @@
 # File: examples/chess_utils.ring
 # Description: Helper functions for Chess Data processing
-
+# Author: Azzeddine Remmal
 
 # Map string labels to Class Indices (0-17)
 aClassMap = [

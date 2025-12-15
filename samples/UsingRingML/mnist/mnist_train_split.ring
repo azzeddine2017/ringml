@@ -1,12 +1,14 @@
 # File: examples/mnist_train_split.ring
 # Description: MNIST Training with DataSplitter and Accuracy Validation
+# Author: Azzeddine Remmal
 
 load "stdlib.ring"
-load "../../src/ringml.ring"
+load "ringml.ring"
 load "mnist_dataset.ring"
 load "csvlib.ring"
 
 decimals(4)
+
 see "=== RingML MNIST (Train/Test Split Strategy) ===" + nl
 
 # 1. Load Data

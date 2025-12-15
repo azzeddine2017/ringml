@@ -1,12 +1,18 @@
 # File: examples/classify_demo.ring
-# Description: Multi-class classification example (Improved)
+# Description: Multi-class classification example
+# Author: Azzeddine Remmal
 
-load "../src/ringml.ring"
+load "ringml.ring"
+
 decimals(8) 
 
 see "=== RingML Multi-Class Classification Demo ===" + nl
 
-# 1. Data
+# 1. Data: 3 Samples, 4 Features each
+# Sample 1: [1,1,0,0] -> Class 1 [1,0,0]
+# Sample 2: [0,0,1,1] -> Class 2 [0,1,0]
+# Sample 3: [0,1,1,0] -> Class 3 [0,0,1]
+
 inputs = new Tensor(3, 4)
 inputs.aData = [
     [1, 1, 0, 0],
@@ -14,7 +20,7 @@ inputs.aData = [
     [0, 1, 1, 0]
 ]
 
-targets = new Tensor(3, 3) 
+targets = new Tensor(3, 3) # One-Hot Encoded
 targets.aData = [
     [1, 0, 0],
     [0, 1, 0],
@@ -23,25 +29,24 @@ targets.aData = [
 
 # 2. Model
 model = new Sequential
-model.add(new Dense(4, 8)) 
-# FIX: Use Sigmoid instead of ReLU for small datasets to avoid "Dying ReLU"
-model.add(new Sigmoid)     
-model.add(new Dense(8, 3)) 
+model.add(new Dense(4, 8)) # Input 4 -> Hidden 8 (Increased neurons)
+model.add(new ReLU)
+model.add(new Dense(8, 3)) # Hidden 8 -> Output 3
 model.add(new Softmax)     
 
 # 3. Training
 criterion = new CrossEntropyLoss
-optimizer = new SGD(0.5) # Increased learning rate for Sigmoid
+optimizer = new SGD(0.1)
 
 see "Training..." + nl
-for epoch = 1 to 3000
+for epoch = 1 to 5000
     # Forward
     preds = model.forward(inputs)
     
     # Loss
     loss = criterion.forward(preds, targets)
     
-    if epoch % 500 = 0
+    if epoch % 1000 = 0
         see "Epoch " + epoch + " Loss: " + loss + nl
     ok
     

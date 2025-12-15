@@ -1,5 +1,6 @@
 # File: examples/mnist_dataset.ring
 # Description: Dataset loader for MNIST CSV format
+# Author: Azzeddine Remmal
 
 class MnistDataset from Dataset
     aRawData

@@ -1,5 +1,11 @@
-load "../src/ringml.ring"
+# File: examples/loader_demo.ring
+# Description: DataLoader Demo
+# Author: Azzeddine Remmal
+
+load "ringml.ring"
+
 decimals(8) 
+
 see "=== DataLoader Demo ===" + nl
 
 # 1. Create Dummy Data (10 Samples)

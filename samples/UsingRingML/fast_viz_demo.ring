@@ -1,9 +1,9 @@
 # File: examples/fast_viz_demo.ring
 # Description: Quick Demo with GUARANTEED convergence to see visuals
+# Author: Azzeddine Remmal
 
 load "stdlib.ring"
-load "../src/ringml.ring"
-
+load "ringml.ring"
 
 decimals(3)
 

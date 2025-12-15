@@ -1,12 +1,14 @@
 # File: examples/mnist_app.ring
 # Description: Interactive MNIST Predictor with ASCII Art
+# Author: Azzeddine Remmal
 
 load "stdlib.ring"
-load "../../src/ringml.ring"
+load "ringml.ring"
 load "mnist_dataset.ring"
 load "csvlib.ring"
 
 decimals(3)
+
 see "=== RingML MNIST Digit Predictor ===" + nl
 
 # 1. Load Data (For testing)

@@ -1,13 +1,15 @@
 # File: examples/chess_train_split.ring
 # Description: Chess Training using built-in DataSplitter
+# Author: Azzeddine Remmal
 
 load "stdlib.ring"
-load "../../src/ringml.ring"
+load "ringml.ring"
 load "chess_utils.ring"
 load "chess_dataset.ring"
 load "csvlib.ring"
 
 decimals(5)
+
 see "=== RingML Chess Training (Automated Split) ===" + nl
 
 # 1. Load Data
