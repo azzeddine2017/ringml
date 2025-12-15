@@ -1,5 +1,10 @@
 # File: src/ringml.ring
 # Description: Main entry point
+# Author: Azzeddine Remmal
+# Date: 2025-12-15
+# Version: 1.0.6
+# License: MIT License
+# Ring Version: 1.24
 
 load "consolecolors.ring"
 load "fastpro.ring"
