@@ -86,7 +86,6 @@ aPackageInfo = [
 		"samples/UsingRingML/mnist/mnist_train_split.ring",
 		"samples/UsingRingML/README.md",
 		"samples/UsingRingML/save_load_demo.ring",
-		"samples/UsingRingML/test.ring",
 		"samples/UsingRingML/xor_train.ring"
 	],
 	:windowsfiles = 	[
