@@ -142,9 +142,5 @@ aPackageInfo = [
 	:linuxremove = "",
 	:macosremove = "",
 	:ubunturemove = "",
-	:fedoraremove = "",
-	:remotefolder = "ringml",
-	:branch = "master",
-	:providerusername = "azzeddine2017",
-	:providerwebsite = "github.com"
+	:fedoraremove = ""
 ]
